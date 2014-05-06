@@ -1,0 +1,130 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+//apply plugin: 'jaxb'
+apply plugin: 'tomcat'
+apply plugin: 'war'
+apply plugin: 'cargo'
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'jetty'
+
+
+ext {
+    springVersion = "4.0.4.RELEASE"
+    springSecurity = "3.2.3.RELEASE"
+    jacksonVersion = "1.9.13"
+    jerseyVersion = "1.18.1"
+    h2Version = "1.3.154"
+    slf4jVersion = "1.7.7"
+    logbackVersion = "1.1.2"
+    groovyVersion = "2.2.2"
+    environmentBase = 'src/main/config/'
+    env = "ci"
+
+    version = '1.0'
+
+}
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath  'no.entitas.gradle:gradle-jaxb-plugin:1.5',
+                    'org.gradle.api.plugins:gradle-tomcat-plugin:1.2.2',
+                  'org.gradle.api.plugins:gradle-cargo-plugin:1.5'
+    }
+}
+
+def properties = new Properties()
+    file(environmentBase + env + '/gradle.properties').withReader {
+    properties.load(it)
+    properties.each { String name, value -> project.setProperty(name, value) }
+}
+
+//sourceCompatibility = 1.5
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //jaxb 'com.sun.xml.bind:jaxb-xjc:2.1.12'
+
+    compile "com.h2database:h2:$h2Version",
+            "org.springframework.security:spring-security-core:$springSecurity",
+
+            "org.codehaus.jackson:jackson-core-asl:$jacksonVersion",
+            "org.codehaus.jackson:jackson-mapper-asl:$jacksonVersion",
+            "org.codehaus.jackson:jackson-xc:$jacksonVersion",
+            //"commons-io:commons-io:$commonsIoVersion",
+
+            "com.sun.jersey:jersey-core:$jerseyVersion",
+            "com.sun.jersey:jersey-client:$jerseyVersion",
+            "com.sun.jersey:jersey-server:$jerseyVersion",
+            "com.sun.jersey:jersey-servlet:$jerseyVersion",
+            "com.sun.jersey:jersey-json:$jerseyVersion",
+            "com.sun.jersey.contribs:jersey-spring:$jerseyVersion",
+            "org.springframework:spring-core:$springVersion",
+            "org.springframework:spring-beans:$springVersion",
+            "org.springframework:spring-context:$springVersion",
+            "org.springframework:spring-aop:$springVersion",
+            "org.springframework:spring-webmvc:$springVersion",
+            "javax.validation:validation-api:1.1.0.Final",
+
+            "org.slf4j:slf4j-api:$slf4jVersion",
+            "ch.qos.logback:logback-classic:$logbackVersion",
+            "ch.qos.logback:logback-core:$logbackVersion",
+            "org.mockito:mockito-all:1.8.5",
+
+            "joda-time:joda-time:2.1",
+            "commons-lang:commons-lang:2.6",
+            "commons-cli:commons-cli:1.2"
+
+    // Pull in test-time dependencies.
+    testCompile "junit:junit:4.8.2",
+            "org.springframework:spring-test:$springVersion",
+
+            "com.sun.jersey:jersey-test-framework:$jerseyVersion",
+            "com.sun.jersey.jersey-test-framework:jersey-test-framework-grizzly2:$jerseyVersion",
+            "com.sun.jersey.jersey-test-framework:jersey-test-framework-core:$jerseyVersion",
+            "com.sun.jersey:jersey-grizzly2:$jerseyVersion",
+            "com.sun.jersey:jersey-client:$jerseyVersion"
+
+    providedCompile "javax.servlet:servlet-api:3.0-alpha-1"
+
+    cargo "org.codehaus.cargo:cargo-core-uberjar:1.1.1",
+            "org.codehaus.cargo:cargo-ant:1.1.1",
+            "jaxen:jaxen:1.1.1"
+
+    // Pull in tomcat dependencies
+    def tomcatVersion = '7.0.25'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+    tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
+        exclude group: "org.eclipse.jdt.core.compiler", module: "ecj"
+    }
+
+    groovy "org.codehaus.groovy:groovy-all:$groovyVersion"
+
+
+}
+
+war {
+    baseName = "rest-basic"
+}
+
+cargo {
+    containerId = tomcatContainerId
+    port = Integer.parseInt(tomcatPort)
+    //context = 'mycontext' set the name of context or default of war name will be used
+    context = tomcatContext
+    remote {
+        hostname = tomcatHostname
+        username = tomcatUsername
+        password = tomcatPassword
+    }
+}
+
