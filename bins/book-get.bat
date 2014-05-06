@@ -1,0 +1,1 @@
+curl --request GET http://localhost:8080/rest-basic/authors/222/books/bk1
