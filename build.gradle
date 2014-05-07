@@ -66,7 +66,10 @@ dependencies {
             "com.sun.jersey:jersey-server:$jerseyVersion",
             "com.sun.jersey:jersey-servlet:$jerseyVersion",
             "com.sun.jersey:jersey-json:$jerseyVersion",
+            "com.sun.jersey:jersey-server-linking:$jerseyVersion",
             "com.sun.jersey.contribs:jersey-spring:$jerseyVersion",
+
+
             "org.springframework:spring-core:$springVersion",
             "org.springframework:spring-beans:$springVersion",
             "org.springframework:spring-context:$springVersion",
@@ -111,6 +114,10 @@ dependencies {
 
 
 }
+
+/* resource java-groovy joint compilation issue */
+sourceSets.main.java.srcDirs = []
+sourceSets.main.groovy.srcDir 'src/main/java'
 
 war {
     baseName = "rest-basic"

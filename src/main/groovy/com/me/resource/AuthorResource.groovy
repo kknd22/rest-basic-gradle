@@ -2,6 +2,7 @@ package com.me.resource
 
 import com.me.dto.Author
 import com.me.dto.Book
+import com.me.dto.HalDummy
 import org.springframework.stereotype.Component
 
 import javax.ws.rs.Consumes
@@ -16,6 +17,7 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 //import javax.ws.rs.core.SecurityContext
 
+//@Path("/api/authors") (for servlet 2.5)
 @Path("/authors")
 @Component
 @Produces([MediaType.APPLICATION_JSON])
@@ -31,6 +33,9 @@ class AuthorResource {
     @GET
     Response getAuthor(@PathParam("id") Integer id) {
         println ("id is: $id")
+//        HalDummy h = new HalDummy(id, "dummy stuff");
+//        Response.ok().entity(h).build();
+
         def a = authorSimple(id)
         Response.ok().entity(a).build();
     }
@@ -58,8 +63,9 @@ class AuthorResource {
     @GET
     Response listAuthors(@QueryParam("names") String names, @QueryParam("pageSize") Integer pageSize) {
         println ("name is: $names, pageSize is: $pageSize")
-        def a = authorSimple(123)
-        Response.ok().entity(a).build();
+        def ass = []
+        ass << authorSimple(1) << authorFull(2)
+        Response.ok().entity(ass).build();
     }
 
     /**
@@ -69,6 +75,16 @@ class AuthorResource {
      */
     private Author authorSimple(Integer id) {
         new Author(id: id, name: "author-name-1")
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    private Author authorFull(Integer id) {
+        new Author(id: id, name: "author-name-22",
+                books: [] << new Book(id: 'book-id-21', title: "title-21") << new Book(id: 'book-id-22', title: "title-22"))
     }
 
     /**

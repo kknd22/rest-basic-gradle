@@ -1,1 +1,1 @@
-curl --request GET "http://localhost:8080/rest-basic/authors?names=abc,xzy&pageSize=23"
+curl --request GET "http://localhost:8080/rest-basic/api/authors?names=abc,xzy&pageSize=23"
