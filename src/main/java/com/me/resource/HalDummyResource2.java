@@ -8,19 +8,18 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.net.URI;
 
 /**
  * Created by chrislin on 5/5/2014.
  */
 @Path("/hal")
 @Component
-@Produces({MediaType.APPLICATION_JSON, "application/vnd.musicstore.v1+json"})
-@Consumes({MediaType.APPLICATION_JSON, "application/vnd.musicstore.v1+json"})
-public class HalDummyResource {
+
+@Produces({"application/vnd.musicstore.v2+json"})
+@Consumes({"application/vnd.musicstore.v2+json"})
+public class HalDummyResource2 {
 
     /**
      *
@@ -31,7 +30,7 @@ public class HalDummyResource {
     @GET
     public Response getDummy(@PathParam("id") Integer id) throws Exception {
         System.out.println ("id is: " + id);
-        HalDummy h = new HalDummy(id, "dummy stuff v1");
+        HalDummy h = new HalDummy(id, "dummy stuff v2");
         return Response.ok(h).link("/"+id, "self").build();
 /*
         return Response.ok().

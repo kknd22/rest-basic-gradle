@@ -1,1 +1,1 @@
-curl --request GET http://localhost:8080/rest-basic/api/hal/333
+curl -v -X GET http://localhost:8080/rest-basic/api/hal/333

@@ -11,10 +11,15 @@ import javax.ws.rs.Path
 import javax.ws.rs.PathParam
 import javax.ws.rs.Produces
 import javax.ws.rs.QueryParam
+import javax.ws.rs.core.Context
+import javax.ws.rs.core.Link
 
 //import javax.ws.rs.core.Context
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
+import javax.ws.rs.core.UriBuilder
+import javax.ws.rs.core.UriInfo
+
 //import javax.ws.rs.core.SecurityContext
 
 //@Path("/api/authors") (for servlet 2.5)
@@ -23,6 +28,8 @@ import javax.ws.rs.core.Response
 @Produces([MediaType.APPLICATION_JSON])
 @Consumes([MediaType.APPLICATION_JSON])
 class AuthorResource {
+    @Context
+    UriInfo uriInfo;
 
     /**
      *
@@ -33,11 +40,17 @@ class AuthorResource {
     @GET
     Response getAuthor(@PathParam("id") Integer id) {
         println ("id is: $id")
-//        HalDummy h = new HalDummy(id, "dummy stuff");
-//        Response.ok().entity(h).build();
-
+        UriBuilder ub = uriInfo.getAbsolutePathBuilder();
+        def u = ub.build()
         def a = authorSimple(id)
-        Response.ok().entity(a).build();
+
+/*
+        Response.ok().
+                link("http://oracle.com", "parent").
+                link(new URI("http://jersey.java.net"), "framework").
+                build();
+*/
+        Response.ok(a).link(u, "self").build();
     }
 
     /**
@@ -60,6 +73,7 @@ class AuthorResource {
      * @param pageSize
      * @return
      */
+    @Path("")
     @GET
     Response listAuthors(@QueryParam("names") String names, @QueryParam("pageSize") Integer pageSize) {
         println ("name is: $names, pageSize is: $pageSize")

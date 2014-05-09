@@ -1,7 +1,6 @@
 package com.me.dto;
 
 import com.me.resource.HalDummyResource;
-import com.sun.jersey.server.linking.Ref;
 
 import java.net.URI;
 
@@ -12,8 +11,6 @@ public class HalDummy {
     private String dummyString;
     private Integer id;
 
-    @Ref(resource=HalDummyResource.class)
-    public URI dummy_self;
 
     public HalDummy(Integer id) {
         this.id = id;
