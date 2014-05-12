@@ -3,7 +3,6 @@ apply plugin: 'java'
 //apply plugin: 'jaxb'
 apply plugin: 'tomcat'
 apply plugin: 'war'
-apply plugin: 'cargo'
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: 'jetty'
@@ -32,16 +31,14 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath  'no.entitas.gradle:gradle-jaxb-plugin:1.5',
-                    'org.gradle.api.plugins:gradle-tomcat-plugin:1.2.2',
-                  'org.gradle.api.plugins:gradle-cargo-plugin:1.5'
+        classpath   'org.gradle.api.plugins:gradle-tomcat-plugin:1.2.2'
     }
 }
 
 def properties = new Properties()
     file(environmentBase + env + '/gradle.properties').withReader {
     properties.load(it)
-    properties.each { String name, value -> project.setProperty(name, value) }
+    properties.each { String name, value -> project.ext.set(name, value) }
 }
 
 //sourceCompatibility = 1.5
@@ -70,18 +67,6 @@ dependencies {
             "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:$jacksonVersion",
 
 
-
-
-
-/*
-    "com.sun.jersey:jersey-client:$jerseyVersion",
-            "com.sun.jersey:jersey-server:$jerseyVersion",
-            "com.sun.jersey:jersey-servlet:$jerseyVersion",
-            "com.sun.jersey:jersey-json:$jerseyVersion",
-            "com.sun.jersey:jersey-server-linking:$jerseyVersion",
-            "com.sun.jersey.contribs:jersey-spring:$jerseyVersion",
-*/
-
             "org.springframework:spring-core:$springVersion",
             "org.springframework:spring-beans:$springVersion",
             "org.springframework:spring-context:$springVersion",
@@ -94,9 +79,7 @@ dependencies {
             "ch.qos.logback:logback-core:$logbackVersion",
             "org.mockito:mockito-all:1.8.5",
 
-            "joda-time:joda-time:2.1",
-            "commons-lang:commons-lang:2.6",
-            "commons-cli:commons-cli:1.2"
+            "joda-time:joda-time:2.1"
 
     // Pull in test-time dependencies.
     testCompile "junit:junit:4.8.2",
@@ -109,10 +92,6 @@ dependencies {
             "com.sun.jersey:jersey-client:$jerseyVersion"
 
     providedCompile "javax.servlet:servlet-api:3.0-alpha-1"
-
-    cargo "org.codehaus.cargo:cargo-core-uberjar:1.1.1",
-            "org.codehaus.cargo:cargo-ant:1.1.1",
-            "jaxen:jaxen:1.1.1"
 
     // Pull in tomcat dependencies
     def tomcatVersion = '7.0.25'
@@ -135,15 +114,19 @@ war {
     baseName = "rest-basic"
 }
 
-cargo {
-    containerId = tomcatContainerId
-    port = Integer.parseInt(tomcatPort)
-    //context = 'mycontext' set the name of context or default of war name will be used
-    context = tomcatContext
-    remote {
-        hostname = tomcatHostname
-        username = tomcatUsername
-        password = tomcatPassword
+
+[jettyRun, jettyRunWar, jettyStop]*.stopPort = 8081
+[jettyRun, jettyRunWar, jettyStop]*.stopKey = 'stopKey'
+
+task integrationTest(type: Test) {
+    include '**/*IntegrationTest*.*'
+    doFirst {
+        jettyRun.daemon = true
+        jettyRun.execute()
     }
+    doLast {
+        jettyStop.execute()
+    }
+
 }
 
