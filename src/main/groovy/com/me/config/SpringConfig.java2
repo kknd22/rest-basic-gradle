@@ -1,0 +1,36 @@
+package com.me.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.ClassPathResource;
+
+/**
+ * Created by chrislin on 5/12/2014.
+ */
+@Configuration
+@PropertySource("classpath:/app-spring.properties")
+public class SpringConfig {
+    //@Value("${mb_value1}") String v1;
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+/*
+        def p = new PropertySourcesPlaceholderConfigurer();
+        p.setLocation(new ClassPathResource("app-spring.properties"));
+        return p
+*/
+    }
+
+    @Bean(name="myBean")
+    public MyBean MyBean() {
+        MyBean m =  new MyBean();
+//        m.setValue1(v1);
+        m.setValue1("${mb_value1}");
+        return m;
+    }
+
+}

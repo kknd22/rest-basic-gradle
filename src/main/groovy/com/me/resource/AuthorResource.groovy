@@ -3,6 +3,8 @@ package com.me.resource
 import com.me.dto.Author
 import com.me.dto.Book
 import com.me.dto.HalDummy
+import com.me.service.AuthorService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 import javax.ws.rs.Consumes
@@ -31,6 +33,9 @@ class AuthorResource {
     @Context
     UriInfo uriInfo;
 
+    @Autowired
+    AuthorService authorService;
+
     /**
      *
      * @param id
@@ -43,6 +48,7 @@ class AuthorResource {
         UriBuilder ub = uriInfo.getAbsolutePathBuilder();
         def u = ub.build()
         def a = authorSimple(id)
+        a.name=authorService.myBean.value1
 
 /*
         Response.ok().
@@ -73,7 +79,7 @@ class AuthorResource {
      * @param pageSize
      * @return
      */
-    @Path("")
+    //@Path("")
     @GET
     Response listAuthors(@QueryParam("names") String names, @QueryParam("pageSize") Integer pageSize) {
         println ("name is: $names, pageSize is: $pageSize")

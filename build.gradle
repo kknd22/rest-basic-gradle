@@ -38,7 +38,8 @@ buildscript {
 def properties = new Properties()
     file(environmentBase + env + '/gradle.properties').withReader {
     properties.load(it)
-    properties.each { String name, value -> project.ext.set(name, value) }
+    project.ext.props=properties
+    //properties.each { String name, value -> project.ext.set(name, value) }
 }
 
 //sourceCompatibility = 1.5
@@ -49,7 +50,6 @@ repositories {
 }
 
 dependencies {
-    //jaxb 'com.sun.xml.bind:jaxb-xjc:2.1.12'
 
     compile "com.h2database:h2:$h2Version",
             "org.springframework.security:spring-security-core:$springSecurity",
@@ -62,6 +62,8 @@ dependencies {
             "org.glassfish.jersey.core:jersey-server:$jerseyVersion",
             "org.glassfish.jersey.core:jersey-common:$jerseyVersion",
             "org.glassfish.jersey.containers:jersey-container-servlet:$jerseyVersion",
+
+
             //"org.glassfish.jersey.media:jersey-media-json-jackson:$jerseyVersion",
             "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion",
             "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:$jacksonVersion",
@@ -77,19 +79,22 @@ dependencies {
             "org.slf4j:slf4j-api:$slf4jVersion",
             "ch.qos.logback:logback-classic:$logbackVersion",
             "ch.qos.logback:logback-core:$logbackVersion",
-            "org.mockito:mockito-all:1.8.5",
+            "org.mockito:mockito-all:1.8.5"
 
-            "joda-time:joda-time:2.1"
+            //"joda-time:joda-time:2.1"
 
     // Pull in test-time dependencies.
     testCompile "junit:junit:4.8.2",
-            "org.springframework:spring-test:$springVersion",
+            //"org.glassfish.jersey.test-framework:jersey-test-framework-core:$jerseyVersion",
+            //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-jdk-http:$jerseyVersion",
+            //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-simple:$jerseyVersion",
+            //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-external:$jerseyVersion",
+            //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-jetty:$jerseyVersion",
+            //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-inmemory:$jerseyVersion",
+            "org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:$jerseyVersion",
 
-            "com.sun.jersey:jersey-test-framework:$jerseyVersion",
-            "com.sun.jersey.jersey-test-framework:jersey-test-framework-grizzly2:$jerseyVersion",
-            "com.sun.jersey.jersey-test-framework:jersey-test-framework-core:$jerseyVersion",
-            "com.sun.jersey:jersey-grizzly2:$jerseyVersion",
-            "com.sun.jersey:jersey-client:$jerseyVersion"
+            "org.springframework:spring-test:$springVersion"
+
 
     providedCompile "javax.servlet:servlet-api:3.0-alpha-1"
 
@@ -118,15 +123,15 @@ war {
 [jettyRun, jettyRunWar, jettyStop]*.stopPort = 8081
 [jettyRun, jettyRunWar, jettyStop]*.stopKey = 'stopKey'
 
-task integrationTest(type: Test) {
-    include '**/*IntegrationTest*.*'
-    doFirst {
-        jettyRun.daemon = true
-        jettyRun.execute()
-    }
-    doLast {
-        jettyStop.execute()
-    }
+//task integrationTest(type: Test) {
+//    include '**/*IntegrationTest*.*'
+//    doFirst {
+//        jettyRun.daemon = true
+//        jettyRun.execute()
+//    }
+//    doLast {
+//        jettyStop.execute()
+//    }
 
-}
+//}
 
