@@ -19,7 +19,7 @@
          specified for component-scanning -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>com.me.config.SpringConfig</param-value>
+        <param-value>com.me.config.shared.SpringConfig</param-value>
     </context-param>
 
     <!-- Bootstrap the root application context as usual using ContextLoaderListener -->

@@ -1,6 +1,6 @@
 package com.me.service
 
-import com.me.config.MyBean
+import com.me.config.shared.MyBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 

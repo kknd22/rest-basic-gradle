@@ -1,11 +1,11 @@
 apply plugin: 'idea'
 apply plugin: 'java'
-//apply plugin: 'jaxb'
 apply plugin: 'tomcat'
 apply plugin: 'war'
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
-apply plugin: 'jetty'
+//apply plugin: 'jetty'
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
 
 
 ext {
@@ -18,6 +18,7 @@ ext {
     slf4jVersion = "1.7.7"
     logbackVersion = "1.1.2"
     groovyVersion = "2.2.2"
+    tomcatVersion = '7.0.25'
     environmentBase = 'src/main/config/'
     env = "ci"
 
@@ -96,10 +97,9 @@ dependencies {
             "org.springframework:spring-test:$springVersion"
 
 
-    providedCompile "javax.servlet:servlet-api:3.0-alpha-1"
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 
     // Pull in tomcat dependencies
-    def tomcatVersion = '7.0.25'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
     tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
@@ -120,8 +120,14 @@ war {
 }
 
 
-[jettyRun, jettyRunWar, jettyStop]*.stopPort = 8081
-[jettyRun, jettyRunWar, jettyStop]*.stopKey = 'stopKey'
+gretty {
+    scanInterval = 1
+    fastReload = true
+    contextPath = '/rest-basic'
+}
+
+//[jettyRun, jettyRunWar, jettyStop]*.stopPort = 8081
+//[jettyRun, jettyRunWar, jettyStop]*.stopKey = 'stopKey'
 
 //task integrationTest(type: Test) {
 //    include '**/*IntegrationTest*.*'
