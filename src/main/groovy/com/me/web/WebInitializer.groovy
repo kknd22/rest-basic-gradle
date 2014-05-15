@@ -3,6 +3,7 @@ package com.me.web
 import com.me.config.rest.RestSpringConfig
 import com.me.config.shared.SpringConfig
 import org.glassfish.jersey.server.ResourceConfig
+import org.glassfish.jersey.server.spring.scope.RequestContextFilter
 import org.glassfish.jersey.servlet.ServletContainer
 import org.springframework.web.WebApplicationInitializer
 import org.springframework.web.context.ContextLoaderListener
@@ -28,17 +29,19 @@ class WebInitializer implements WebApplicationInitializer {
         println("############################################################")
         println("############################################################")
 
+        // -- see readme in one-ear-multiple-war project how to add ref to the spring config in ear-jars
+        sc.setInitParameter('contextConfigLocation', "com.me.config.shared.RestSpringConfig");
+        //sc.addListener("org.springframework.web.context.request.RequestContextListener");
+
         def rootContext = new AnnotationConfigWebApplicationContext()
-        rootContext.register(RestSpringConfig.class)
+        rootContext.register(SpringConfig.class)
 
         // Manage the lifecycle of the root application context
         sc.addListener(new ContextLoaderListener(rootContext))
 
-        // -- see readme in one-erar-multiple-war project how to add ref to the spring config in ear-jars
-        sc.setInitParameter('contextConfigLocation', "com.me.config.shared.SpringConfig");
-        sc.addListener("org.springframework.web.context.request.RequestContextListener");
         def r = new ResourceConfig()
                 .packages("com.me.resource")
+                .register(RequestContextFilter.class)
 
         // Register and map the dispatcher servlet
         def dispatcher = sc.addServlet('jersey-dispatcher', new ServletContainer(r))

@@ -19,6 +19,7 @@ ext {
     logbackVersion = "1.1.2"
     groovyVersion = "2.2.2"
     tomcatVersion = '7.0.25'
+    mockitoVersion = '1.9.5'
     environmentBase = 'src/main/config/'
     env = "ci"
 
@@ -45,6 +46,15 @@ def properties = new Properties()
 
 //sourceCompatibility = 1.5
 
+//sourceSets {
+//    test {
+//        resources {
+//            //srcDir 'src/test/resources'
+//            srcDir 'src/test/groovy'
+//            include '**/*.xml'
+//        }
+//    }
+//}
 
 repositories {
     mavenCentral()
@@ -53,48 +63,49 @@ repositories {
 dependencies {
 
     compile "com.h2database:h2:$h2Version",
-            "org.springframework.security:spring-security-core:$springSecurity",
+        "org.springframework.security:spring-security-core:$springSecurity",
 
-            //"commons-io:commons-io:$commonsIoVersion",
+        //"commons-io:commons-io:$commonsIoVersion",
 
-            "org.glassfish.jersey.ext:jersey-spring3:$jerseyVersion",
-            "org.glassfish.jersey.ext:jersey-declarative-linking:$jerseyVersion",
-            "org.glassfish.jersey.core:jersey-client:$jerseyVersion",
-            "org.glassfish.jersey.core:jersey-server:$jerseyVersion",
-            "org.glassfish.jersey.core:jersey-common:$jerseyVersion",
-            "org.glassfish.jersey.containers:jersey-container-servlet:$jerseyVersion",
-
-
-            //"org.glassfish.jersey.media:jersey-media-json-jackson:$jerseyVersion",
-            "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion",
-            "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:$jacksonVersion",
+        "org.glassfish.jersey.ext:jersey-spring3:$jerseyVersion",
+        "org.glassfish.jersey.ext:jersey-declarative-linking:$jerseyVersion",
+        "org.glassfish.jersey.core:jersey-client:$jerseyVersion",
+        "org.glassfish.jersey.core:jersey-server:$jerseyVersion",
+        "org.glassfish.jersey.core:jersey-common:$jerseyVersion",
+        "org.glassfish.jersey.containers:jersey-container-servlet:$jerseyVersion",
 
 
-            "org.springframework:spring-core:$springVersion",
-            "org.springframework:spring-beans:$springVersion",
-            "org.springframework:spring-context:$springVersion",
-            "org.springframework:spring-aop:$springVersion",
-            "org.springframework:spring-webmvc:$springVersion",
-            "javax.validation:validation-api:1.1.0.Final",
+        //"org.glassfish.jersey.media:jersey-media-json-jackson:$jerseyVersion",
+        "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion",
+        "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:$jacksonVersion",
 
-            "org.slf4j:slf4j-api:$slf4jVersion",
-            "ch.qos.logback:logback-classic:$logbackVersion",
-            "ch.qos.logback:logback-core:$logbackVersion",
-            "org.mockito:mockito-all:1.8.5"
 
-            //"joda-time:joda-time:2.1"
+        "org.springframework:spring-core:$springVersion",
+        "org.springframework:spring-beans:$springVersion",
+        "org.springframework:spring-context:$springVersion",
+        "org.springframework:spring-aop:$springVersion",
+        "org.springframework:spring-webmvc:$springVersion",
+        "javax.validation:validation-api:1.1.0.Final",
+
+        "org.slf4j:slf4j-api:$slf4jVersion",
+        "ch.qos.logback:logback-classic:$logbackVersion",
+        "ch.qos.logback:logback-core:$logbackVersion",
+        "org.mockito:mockito-all:1.8.5"
+
+        //"joda-time:joda-time:2.1"
 
     // Pull in test-time dependencies.
     testCompile "junit:junit:4.8.2",
-            //"org.glassfish.jersey.test-framework:jersey-test-framework-core:$jerseyVersion",
-            //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-jdk-http:$jerseyVersion",
-            //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-simple:$jerseyVersion",
-            //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-external:$jerseyVersion",
-            //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-jetty:$jerseyVersion",
-            //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-inmemory:$jerseyVersion",
-            "org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:$jerseyVersion",
+        "org.mockito:mockito-core:$mockitoVersion",
+        //"org.glassfish.jersey.test-framework:jersey-test-framework-core:$jerseyVersion",
+        //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-jdk-http:$jerseyVersion",
+        //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-simple:$jerseyVersion",
+        //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-external:$jerseyVersion",
+        //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-jetty:$jerseyVersion",
+        //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-inmemory:$jerseyVersion",
+        "org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:$jerseyVersion",
 
-            "org.springframework:spring-test:$springVersion"
+        "org.springframework:spring-test:$springVersion"
 
 
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
@@ -124,6 +135,11 @@ gretty {
     scanInterval = 1
     fastReload = true
     contextPath = '/rest-basic'
+    fileLogEnabled = false
+}
+
+test {
+    testLogging.showStandardStreams = true
 }
 
 //[jettyRun, jettyRunWar, jettyStop]*.stopPort = 8081

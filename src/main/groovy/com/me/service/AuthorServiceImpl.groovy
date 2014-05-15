@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 /**
- * Created by chrislin on 5/12/2014.
+ * Created by chrislin on 5/15/2014.
  */
-
-
-interface AuthorService {
-    MyBean getMyBean()
+@Service
+class AuthorServiceImpl implements AuthorService{
+    @Autowired
+    MyBean myBean
 }
