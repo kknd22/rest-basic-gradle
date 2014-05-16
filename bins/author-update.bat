@@ -1,0 +1,1 @@
+curl -i -X PUT -H "Content-Type: application/json" -d @json\author-update.json http://localhost:8080/rest-basic/api/authors/111

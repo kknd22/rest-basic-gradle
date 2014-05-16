@@ -1,0 +1,13 @@
+{
+  "name": "put-nested-updated-author-name",
+  "books": [
+    {
+      "id": "book-id-21",
+      "title": "put-nested-title-21"
+    },
+    {
+      "id": "book-id-put-nested",
+      "title": "title-put-nested"
+    }
+  ]
+}

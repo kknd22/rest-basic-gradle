@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.ImportResource
 import org.springframework.context.annotation.PropertySource
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 
@@ -13,6 +14,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 @Configuration
 @PropertySource("classpath:/app-spring.properties")
 @ComponentScan(basePackages = ["com.me.service"], basePackageClasses=[com.me.config.shared.MyBean.class])
+@ImportResource(["classpath:applicationContext.xml"])
 class SpringConfig {
     @Value('${mb_value1}') String v1
 

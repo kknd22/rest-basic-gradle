@@ -1,23 +1,24 @@
 package com.me.resource
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.me.dto.Author
 import com.me.dto.Book
-import com.me.dto.HalDummy
 import com.me.service.AuthorService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 import javax.ws.rs.Consumes
 import javax.ws.rs.GET
+import javax.ws.rs.POST
+import javax.ws.rs.PUT
 import javax.ws.rs.Path
 import javax.ws.rs.PathParam
 import javax.ws.rs.Produces
 import javax.ws.rs.QueryParam
 import javax.ws.rs.core.Context
-import javax.ws.rs.core.Link
+import javax.ws.rs.core.MediaType
 
 //import javax.ws.rs.core.Context
-import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import javax.ws.rs.core.UriBuilder
 import javax.ws.rs.core.UriInfo
@@ -57,6 +58,28 @@ class AuthorResource {
                 build();
 */
         Response.ok(a).link(u, "self").build();
+    }
+
+    @POST
+    Response createAuthor(Author a) {
+        UriBuilder ub = uriInfo.getAbsolutePathBuilder();
+        def u = ub.segment("999").build()
+        println(a.dump())
+        Response.created().link(u, "self").build();
+    }
+
+    @Path("{id}")
+    @PUT
+    Response updateAuthor(String aString) {
+        println("aString: $aString")
+
+        def mp = new ObjectMapper()
+        def o1 = authorFull(3434)
+        println("o1: ${mp.writeValueAsString(o1)}")
+
+        def o2 = mp.readerForUpdating(o1).readValue(aString)
+        println("o2: ${mp.writeValueAsString(o2)}")
+        Response.noContent().build();
     }
 
     /**
