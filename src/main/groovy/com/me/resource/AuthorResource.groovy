@@ -3,6 +3,8 @@ package com.me.resource
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.me.dto.Author
 import com.me.dto.Book
+import com.me.exception.MeRumtineException
+import com.me.exceptionmapper.MeExceptionMapper
 import com.me.service.AuthorService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -28,7 +30,7 @@ import javax.ws.rs.core.UriInfo
 //@Path("/api/authors") (for servlet 2.5)
 @Path("/authors")
 @Component
-@Produces([MediaType.APPLICATION_JSON])
+@Produces([MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN])
 @Consumes([MediaType.APPLICATION_JSON])
 class AuthorResource {
     @Context
@@ -46,6 +48,10 @@ class AuthorResource {
     @GET
     Response getAuthor(@PathParam("id") Integer id) {
         println ("id is: $id")
+
+        if (id != 111)
+            throw new MeRumtineException("MeRuntimeException Throwed message#################")
+
         UriBuilder ub = uriInfo.getAbsolutePathBuilder();
         def u = ub.build()
         def a = authorSimple(id)

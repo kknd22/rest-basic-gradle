@@ -41,6 +41,7 @@ class WebInitializer implements WebApplicationInitializer {
 
         def r = new ResourceConfig()
                 .packages("com.me.resource")
+                .packages("com.me.exceptionmapper")
                 .register(RequestContextFilter.class)
 
         // Register and map the dispatcher servlet

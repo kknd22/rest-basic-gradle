@@ -1,0 +1,1 @@
+curl -v -X GET http://localhost:8080/rest-basic/api/authors/92929
