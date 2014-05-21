@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+    <deployment>
+        <!-- exclude-subsystem prevents a subsystems deployment unit processors running on a deployment -->
+        <!-- which gives basically the same effect as removing the subsystem, but it only affects single deployment -->
+        <exclude-subsystems>
+            <subsystem name="jaxrs" />
+            <subsystem name="resteasy" />
+            <subsystem name="webservices"/>
+        </exclude-subsystems>
+
+        <!-- This is needed in any case even if you don't use exclude-subsystem above-->
+        <exclusions>
+            <module name="javaee.api"/>
+        </exclusions>
+        <dependencies>
+            <module name="javax.activation.api" export="true"/>
+            <module name="javax.annotation.api" export="true"/>
+            <module name="javax.el.api" export="true"/>
+            <module name="javax.enterprise.api" export="true"/>
+            <module name="javax.enterprise.deploy.api" export="true"/>
+            <module name="javax.inject.api" export="true"/>
+            <module name="javax.interceptor.api" export="true"/>
+            <module name="javax.management.j2ee.api" export="true"/>
+            <module name="javax.resource.api" export="true"/>
+            <module name="javax.rmi.api" export="true"/>
+            <module name="javax.security.auth.message.api" export="true"/>
+            <module name="javax.security.jacc.api" export="true"/>
+            <module name="javax.servlet.api" export="true"/>
+            <module name="javax.servlet.jsp.api" export="true"/>
+            <module name="javax.transaction.api" export="true"/>
+            <module name="javax.validation.api" export="true"/>
+            <module name="javax.xml.bind.api" export="true"/>
+            <module name="javax.xml.registry.api" export="true"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>

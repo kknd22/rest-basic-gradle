@@ -17,7 +17,10 @@ import javax.servlet.ServletException
 /**
  * Created by chrislin on 5/13/2014.
  */
-class WebInitializer implements WebApplicationInitializer {
+class WebInitializer {
+/*
+    implements
+} WebApplicationInitializer {
 
     @Override
     public void onStartup(ServletContext sc) throws ServletException {
@@ -47,11 +50,28 @@ class WebInitializer implements WebApplicationInitializer {
         // Register and map the dispatcher servlet
         def dispatcher = sc.addServlet('jersey-dispatcher', new ServletContainer(r))
         dispatcher.setLoadOnStartup(1)
-        dispatcher.addMapping("/api/*")
+        dispatcher.addMapping("/api*/
+/*")
+*/
+
+/*
+        supress jboss build-in easyrest
+        if not you will see this: JBWEB000287: Exception sending context initialized event to
+        listener instance of class org.springframework.web.context.ContextLoaderListener:
+        java.lang.IllegalStateException: Cannot initialize context because
+        there is already a root application context present
+        - check whether you have multiple ContextLoader* definitions in your web.xml!
+*/
+/*
+        dispatcher.setInitParameter('resteasy.scan', 'false');
+        dispatcher.setInitParameter('resteasy.scan.providers', 'false');
+        dispatcher.setInitParameter('resteasy.scan.resources', 'false');
 
         FilterRegistration charEncodingfilterReg = sc.addFilter("CharacterEncodingFilter", CharacterEncodingFilter.class)
         charEncodingfilterReg.setInitParameter("encoding", "UTF-8")
         charEncodingfilterReg.setInitParameter("forceEncoding", "true")
-        charEncodingfilterReg.addMappingForUrlPatterns(null, false, "/api/*")
+        charEncodingfilterReg.addMappingForUrlPatterns(null, false, "/api*/
+/*")
     }
+*/
 }

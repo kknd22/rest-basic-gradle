@@ -22,6 +22,20 @@
         <param-value>com.me.config.shared.SpringConfig</param-value>
     </context-param>
 
+    <!-- calm jboss's resteasy -->
+    <context-param>
+        <param-name>resteasy.scan</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>resteasy.scan.providers</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>resteasy.scan.resources</param-name>
+        <param-value>false</param-value>
+    </context-param>
+
     <!-- Bootstrap the root application context as usual using ContextLoaderListener -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -33,6 +47,10 @@
         <init-param>
             <param-name>contextClass</param-name>
             <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+        </init-param>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>com.me.config.rest.RestSpringConfig</param-value>
         </init-param>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
