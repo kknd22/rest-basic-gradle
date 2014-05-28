@@ -31,7 +31,8 @@ public class HalDummyResource2 {
     public Response getDummy(@PathParam("id") Integer id) throws Exception {
         System.out.println ("id is: " + id);
         HalDummy h = new HalDummy(id, "dummy stuff v2");
-        return Response.ok(h).link("/"+id, "self").build();
+        return null;
+        //return Response.ok(h).link("/"+id, "self").build();
 /*
         return Response.ok().
                 link("http://oracle.com", "parent").

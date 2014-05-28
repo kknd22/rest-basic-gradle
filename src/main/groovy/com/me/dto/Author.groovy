@@ -1,19 +1,19 @@
 package com.me.dto
 
-
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
 /**
  * Created by chrislin on 5/6/2014.
  */
+@ApiModel( value = "Author", description = "Author resource representation" )
 public class Author {
-    public String name
-    public Integer id
+    @ApiModelProperty( value = "Author's first name", required = true )
+    String name
+
+    @ApiModelProperty( value = "Author's id", required = true )
+    Integer id
+
+    @ApiModelProperty( value = "Books published by the Author", required = false )
     List<Book> books
 
-    public String getName() {
-        return name
-    }
-
-    public Integer getId() {
-        return id
-    }
 }

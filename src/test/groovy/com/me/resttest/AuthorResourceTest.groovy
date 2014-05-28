@@ -34,7 +34,7 @@ class AuthorResourceTest extends AbstractBaseResourceTest{
 
 
     @Test
-    public void testGet() throws Exception {
+    void testGet() throws Exception {
         Response r = target().path("/authors/111").request(MediaType.APPLICATION_JSON_TYPE).get();
         assert r.getStatus() == Response.Status.OK.statusCode
 

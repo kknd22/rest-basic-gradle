@@ -14,7 +14,7 @@ import javax.ws.rs.ext.Provider
 class MeExceptionMapper implements ExceptionMapper<MeRumtineException> {
 
     Response toResponse(MeRumtineException ex) {
-        Response.status(404).entity(ex.getMessage()).type("text/plain").build();
+        Response.serverError().entity(ex.getMessage()).type("text/plain").build();
     }
 }
 

@@ -23,6 +23,7 @@
     </context-param>
 
     <!-- calm jboss's resteasy -->
+<!--
     <context-param>
         <param-name>resteasy.scan</param-name>
         <param-value>false</param-value>
@@ -35,6 +36,7 @@
         <param-name>resteasy.scan.resources</param-name>
         <param-value>false</param-value>
     </context-param>
+-->
 
     <!-- Bootstrap the root application context as usual using ContextLoaderListener -->
     <listener>
@@ -56,7 +58,39 @@
             <param-name>javax.ws.rs.Application</param-name>
             <param-value>com.me.application.MyApplication</param-value>
         </init-param>
+        <init-param>
+            <param-name>jersey.config.server.provider.classnames</param-name>
+            <param-value>
+                com.wordnik.swagger.jaxrs.JaxrsApiReader,
+                com.wordnik.swagger.jaxrs.listing.ApiDeclarationProvider,
+                com.wordnik.swagger.jaxrs.listing.ApiListingResource,
+                com.wordnik.swagger.jaxrs.listing.ApiListingResourceJSON,
+                com.wordnik.swagger.jaxrs.listing.ResourceListingProvider
+            </param-value>
+        </init-param>
+
         <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>swagger-jersey2-config</servlet-name>
+        <servlet-class>com.wordnik.swagger.jaxrs.config.DefaultJaxrsConfig</servlet-class>
+        <init-param>
+            <param-name>api.version</param-name>
+            <param-value>1.0.0</param-value>
+        </init-param>
+        <!-- seems got ignored -->
+<!--
+        <init-param>
+            <param-name>swagger.config.reader</param-name>
+            <param-value>com.me.web.SwaggerCustomConfigReader</param-value>
+        </init-param>
+-->
+        <init-param>
+            <param-name>swagger.api.basepath</param-name>
+            <param-value>http://dgvb4ds1.corp.fairisaac.com:8080/rest-basic/api</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
     </servlet>
 
     <servlet-mapping>

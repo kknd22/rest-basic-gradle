@@ -17,6 +17,7 @@ stacktrace.log
 /target-eclipse/
 .idea/*
 *.iml
+/generated/
 
 #################
 ## Eclipse
