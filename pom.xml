@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>swagger-maven-example</groupId>
-    <artifactId>swagger-maven-example</artifactId>
+    <groupId>com.fico</groupId>
+    <artifactId>dm-rest</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
@@ -107,6 +107,22 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.qmino</groupId>
+                <artifactId>miredot-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>restdoc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <licence>UHJvamVjdHxjb20uZmljby5kbS1yZXN0fDIwMTktMDUtMjh8ZmFsc2UjTUN3Q0ZEdEV0VlVpTlZwdTcrbWNXWmJtSW5KMkFkUStBaFFBalFCTlJWWnQ1Vm5SelZhczRSckZ6YlZqOWc9PQ==</licence>
+                    <!-- insert other configuration here (optional) -->
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <pluginRepositories>
@@ -119,6 +135,11 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>miredot</id>
+            <name>MireDot Releases</name>
+            <url>http://nexus.qmino.com/content/repositories/miredot</url>
         </pluginRepository>
     </pluginRepositories>
 </project>

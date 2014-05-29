@@ -71,64 +71,52 @@ repositories {
 }
 
 dependencies {
+    // ------------------------------ compile---------------------
+    compile "org.springframework.security:spring-security-core:$springSecurity"
+    compile "org.glassfish.jersey.ext:jersey-spring3:$jerseyVersion"
+    compile  "org.glassfish.jersey.ext:jersey-declarative-linking:$jerseyVersion"
+    compile "org.glassfish.jersey.core:jersey-client:$jerseyVersion"
+    compile "org.glassfish.jersey.core:jersey-server:$jerseyVersion"
+    compile "org.glassfish.jersey.core:jersey-common:$jerseyVersion"
+    compile "org.glassfish.jersey.containers:jersey-container-servlet:$jerseyVersion"
 
-    compile "com.h2database:h2:$h2Version",
-        "org.springframework.security:spring-security-core:$springSecurity",
+    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:$jacksonVersion"
 
-        //"commons-io:commons-io:$commonsIoVersion",
+    compile "org.springframework:spring-core:$springVersion"
+    compile "org.springframework:spring-beans:$springVersion"
+    compile "org.springframework:spring-context:$springVersion"
+    compile "org.springframework:spring-aop:$springVersion"
+    compile "org.springframework:spring-webmvc:$springVersion"
+    compile "javax.validation:validation-api:1.1.0.Final"
 
-        "org.glassfish.jersey.ext:jersey-spring3:$jerseyVersion",
-        "org.glassfish.jersey.ext:jersey-declarative-linking:$jerseyVersion",
-        "org.glassfish.jersey.core:jersey-client:$jerseyVersion",
-        "org.glassfish.jersey.core:jersey-server:$jerseyVersion",
-        "org.glassfish.jersey.core:jersey-common:$jerseyVersion",
-        "org.glassfish.jersey.containers:jersey-container-servlet:$jerseyVersion",
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+    compile "ch.qos.logback:logback-classic:$logbackVersion"
+    compile "ch.qos.logback:logback-core:$logbackVersion"
+    //compile "com.wordnik:swagger-jaxrs_2.10:$swaggerVersion"
+    compile "joda-time:joda-time:2.1"
 
+    // ------------------------------ testCompile---------------------
+    testCompile "junit:junit:4.8.2"
+    testCompile "org.mockito:mockito-core:$mockitoVersion"
+    //testCompile "org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-inmemory:$jerseyVersion"
+    testCompile "org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:$jerseyVersion"
+    testCompile "org.mockito:mockito-all:1.8.5"
 
-        //"org.glassfish.jersey.media:jersey-media-json-jackson:$jerseyVersion",
-        "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion",
-        "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:$jacksonVersion",
-
-
-        "org.springframework:spring-core:$springVersion",
-        "org.springframework:spring-beans:$springVersion",
-        "org.springframework:spring-context:$springVersion",
-        "org.springframework:spring-aop:$springVersion",
-        "org.springframework:spring-webmvc:$springVersion",
-        "javax.validation:validation-api:1.1.0.Final",
-
-        "org.slf4j:slf4j-api:$slf4jVersion",
-        "ch.qos.logback:logback-classic:$logbackVersion",
-        "ch.qos.logback:logback-core:$logbackVersion",
-        "com.wordnik:swagger-jaxrs_2.10:$swaggerVersion",
-
-        "joda-time:joda-time:2.1"
-
-    // Pull in test-time dependencies.
-    testCompile "junit:junit:4.8.2",
-        "org.mockito:mockito-core:$mockitoVersion",
-        //"org.glassfish.jersey.test-framework:jersey-test-framework-core:$jerseyVersion",
-        //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-jdk-http:$jerseyVersion",
-        //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-simple:$jerseyVersion",
-        //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-external:$jerseyVersion",
-        //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-jetty:$jerseyVersion",
-        //"org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-inmemory:$jerseyVersion",
-        "org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:$jerseyVersion",
-        "org.mockito:mockito-all:1.8.5",
-
-        "org.springframework:spring-test:$springVersion"
+    testCompile "org.springframework:spring-test:$springVersion"
+    testCompile  "org.codehaus.groovy:groovy-all:$groovyVersion"
 
 
+    // ------------------------------ providedCompile---------------------
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 
-    // Pull in tomcat dependencies
-    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+
+    // ------------------------------ specail tomcat---------------------
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}", "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
     tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
         exclude group: "org.eclipse.jdt.core.compiler", module: "ecj"
     }
 
-    groovy "org.codehaus.groovy:groovy-all:$groovyVersion"
 
 
 }

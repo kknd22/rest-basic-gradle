@@ -34,7 +34,8 @@ import javax.ws.rs.core.UriInfo
 
 //@Path("/api/authors") (for servlet 2.5)
 @Path("/authors")
-@Component
+//@Component  no need otherwise will reg twice
+
 @Produces([MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN])
 @Consumes([MediaType.APPLICATION_JSON])
 @Api(value = "/authors", description = "Authors resources' API")

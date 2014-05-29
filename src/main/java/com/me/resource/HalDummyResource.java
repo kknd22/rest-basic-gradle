@@ -1,6 +1,7 @@
 package com.me.resource;
 
 import com.me.dto.HalDummy;
+import com.me.exception.MeRumtineException;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiResponse;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -41,14 +43,23 @@ public class HalDummyResource {
     public Response getDummy(@PathParam("id") Integer id) throws Exception {
         System.out.println ("id is: " + id);
         HalDummy h = new HalDummy(id, "dummy stuff v1");
-        return null;
-        //return Response.ok(h).link("/"+id, "self").build();
+        Response.ResponseBuilder r = Response.ok(h);
+        if (1==2) {
+            throw new MeRumtineException("MeRuntimeException Throwed message#################");
+        }
+        return r.build();
 /*
         return Response.ok().
                 link("http://oracle.com", "parent").
                 link(new URI("http://jersey.java.net"), "framework").
                 build();
 */
+    }
+
+    @Path("abc")
+    @POST
+    Response createHal(HalDummy h) {
+        return Response.created(null).build();
     }
 
 

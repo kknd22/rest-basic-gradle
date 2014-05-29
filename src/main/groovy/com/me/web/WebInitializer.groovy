@@ -33,8 +33,8 @@ class WebInitializer {
         println("############################################################")
 
         // -- see readme in one-ear-multiple-war project how to add ref to the spring config in ear-jars
-        sc.setInitParameter('contextConfigLocation', "com.me.config.shared.RestSpringConfig");
-        //sc.addListener("org.springframework.web.context.request.RequestContextListener");
+        // https://java.net/jira/browse/JERSEY-2038
+        sc.setInitParameter('contextConfigLocation', "");
 
         def rootContext = new AnnotationConfigWebApplicationContext()
         rootContext.register(SpringConfig.class)
